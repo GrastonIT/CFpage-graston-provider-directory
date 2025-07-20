@@ -25,18 +25,37 @@ export async function loader({ request }: Route.LoaderArgs) {
     // Apply additional filters to search results
     if (specialty) {
       providers = providers.filter(provider =>
-        provider.specialty.toLowerCase().includes(specialty.toLowerCase())
+        provider.specialty?.toLowerCase()?.includes(specialty.toLowerCase())
       );
     }
     if (location) {
       providers = providers.filter(provider =>
-        provider.city.toLowerCase().includes(location.toLowerCase()) ||
-        provider.state.toLowerCase().includes(location.toLowerCase())
+        provider.city?.toLowerCase()?.includes(location.toLowerCase()) ||
+        provider.state?.toLowerCase()?.includes(location.toLowerCase())
       );
     }
     if (grastonLevel) {
       providers = providers.filter(provider => provider.grastonLevel === grastonLevel);
     }
+
+    // Filter out providers with invalid data
+    providers = providers.filter(provider => {
+      return provider && 
+             provider.id &&
+             provider.name &&
+             (!provider.position || (
+               Array.isArray(provider.position) &&
+               provider.position.length === 2 &&
+               typeof provider.position[0] === 'number' &&
+               typeof provider.position[1] === 'number' &&
+               !isNaN(provider.position[0]) &&
+               !isNaN(provider.position[1]) &&
+               provider.position[0] >= -90 &&
+               provider.position[0] <= 90 &&
+               provider.position[1] >= -180 &&
+               provider.position[1] <= 180
+             ));
+    });
   } else {
     // No search query, use regular getProviders with filters
     providers = await getProviders({
@@ -83,8 +102,24 @@ export default function ProvidersPage() {
 
       <div className="flex flex-col lg:flex-row gap-8 mt-4">
         <aside className="lg:w-1/4 p-4 border rounded-lg shadow-sm h-fit">
-          <FilterGroup facets={facets} />
-          <ProximityFilter map={null} />
+          <FilterGroup
+            title="Specialties"
+            options={facets.specialty}
+            selected={[]}
+            onChange={() => {}}
+          />
+          <FilterGroup
+            title="Languages"
+            options={facets.languages}
+            selected={[]}
+            onChange={() => {}}
+          />
+          <FilterGroup
+            title="Patient Types"
+            options={facets.patients}
+            selected={[]}
+            onChange={() => {}}
+          />
         </aside>
         <main className="lg:w-3/4">
           <div className="h-[400px] w-full rounded-lg overflow-hidden shadow-md">

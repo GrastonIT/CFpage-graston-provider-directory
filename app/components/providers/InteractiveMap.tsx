@@ -171,10 +171,24 @@ export function InteractiveMap({
 
     // Add/update provider markers
     providers.forEach(provider => {
-      if (!provider.position) return;
+      // Validate provider and position data
+      if (!provider || !provider.position || !Array.isArray(provider.position) || 
+          provider.position.length !== 2 || 
+          typeof provider.position[0] !== 'number' || 
+          typeof provider.position[1] !== 'number' ||
+          isNaN(provider.position[0]) || 
+          isNaN(provider.position[1])) {
+        return;
+      }
+
+      // Validate coordinates are within bounds
+      const [lat, lng] = provider.position;
+      if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+        return;
+      }
 
       const isSelected = selectedProvider?.id === provider.id;
-      const icon = createTierIcon(provider.tier, isSelected);
+      const icon = createTierIcon(provider.tier || 'basic', isSelected);
       if (!icon) return;
 
       if (markersRef.current[provider.id]) {
