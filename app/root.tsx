@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Links, LinksFunction, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "react-router";
 import type { Route } from "../app/+types/root";
-import Footer from "./components/base/Footer";
 import tailwind from "./tailwind.css?url";
 import { initializeTheme } from "./utils/theme";
 
@@ -28,7 +27,7 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => [
   {
-    title: "RR & CF Pages Template",
+    title: "Graston Technique® Provider Directory",
   },
 ];
 
@@ -46,9 +45,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-bg">
-        <div className="overflow-hidden">{children}</div>
-        <Footer />
+      <body className="bg-bg text-light">
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>

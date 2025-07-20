@@ -1,13 +1,7 @@
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="pt-48 pb-8 w-full bg-white">
-      <div className="container px-4 mx-auto">
-        <div className="text-center">
-          <a href="https://github.com/Xazu001/react-router-cf" target="_blank" rel="noreferrer" className="text-xl font-bold duration-150 font-header hover:text-accent-1h"> FREE TO USE TEMPLATE</a>
-        </div>
-      </div>
+    <footer className="bg-gray-200 p-4 text-center text-sm text-gray-600">
+      <p>© {new Date().getFullYear()} Graston Technique, LLC. All Rights Reserved.</p>
     </footer>
   );
-};
-
-export default Footer;
+}

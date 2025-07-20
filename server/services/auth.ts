@@ -1,7 +1,6 @@
 import BaseService from "./base";
 import type { Kysely } from "kysely";
 import * as jose from "jose";
-import type { Context } from "hono";
 import type { Tables } from "../database/tables";
 
 export async function getKeyPair(algorithm: string, priv: string, pub: string) {
@@ -47,20 +46,30 @@ export class AuthService extends BaseService {
     };
   }
 
-  public async verifyRequest(c: Context) {
-    const cookie = c.req.header("login-session-token");
+  public async verifyRequest(request: Request) {
+    const cookie = request.headers.get("cookie");
+    const sessionToken = this.extractSessionToken(cookie);
 
-    if (!cookie) {
+    if (!sessionToken) {
       return null;
     }
 
-    const userSession = await this.verifyToken(cookie).catch(() => null);
+    const userSession = await this.verifyToken(sessionToken).catch(() => null);
 
     if (!userSession) {
       return null;
     }
 
     return userSession;
+  }
+
+  private extractSessionToken(cookieHeader: string | null): string | null {
+    if (!cookieHeader) return null;
+    
+    const cookies = cookieHeader.split(';').map(c => c.trim());
+    const sessionCookie = cookies.find(c => c.startsWith('login-session-token='));
+    
+    return sessionCookie ? sessionCookie.split('=')[1] : null;
   }
 }
 AuthService;

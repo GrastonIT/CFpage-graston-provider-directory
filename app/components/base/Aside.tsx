@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { HiHome } from "react-icons/hi";
-import { HiShoppingBag } from "react-icons/hi2";
-import { IoGameController } from "react-icons/io5";
+import { HiMapPin } from "react-icons/hi2";
+import { HiUserGroup } from "react-icons/hi2";
 
 export default function Aside() {
   const baseIconClassName =
@@ -12,21 +12,21 @@ export default function Aside() {
         <HiHome className={`${className} ${baseIconClassName}`} />
       ),
       title: "Home",
-      to: "/",
+      to: "/home",
     },
     {
       icon: (className: string) => (
-        <HiShoppingBag className={`${className} ${baseIconClassName}`} />
+        <HiMapPin className={`${className} ${baseIconClassName}`} />
       ),
-      title: "Cart",
-      to: "/",
+      title: "Providers",
+      to: "/providers",
     },
     {
       icon: (className: string) => (
-        <IoGameController className={`${className} ${baseIconClassName}`} />
+        <HiUserGroup className={`${className} ${baseIconClassName}`} />
       ),
-      title: "Games",
-      to: "/",
+      title: "About",
+      to: "/about",
     },
   ];
 
