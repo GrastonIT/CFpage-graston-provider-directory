@@ -29,23 +29,42 @@ export default function ProviderProfile() {
   const { provider } = useLoaderData<LoaderData>();
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
           <div className="flex items-center mb-4">
             <Link 
               to="/providers-enhanced" 
-              className="text-blue-200 hover:text-white mr-2"
+              className="text-blue-200 hover:text-white mr-2 flex items-center transition-colors duration-200"
             >
-              ← Back to Directory
+              <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Directory
             </Link>
           </div>
           
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             {/* Profile Image */}
-            <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center text-4xl font-bold text-blue-600">
-              {provider.name.split(' ').map(n => n[0]).join('')}
+            <div className="relative">
+              <div className="w-32 h-32 bg-gradient-to-br from-white to-blue-100 rounded-full flex items-center justify-center text-4xl font-bold text-blue-600 shadow-2xl border-4 border-white">
+                {provider.name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div className="absolute -bottom-2 -right-2">
+                <div className="w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
             </div>
             
             {/* Provider Info */}
@@ -86,15 +105,20 @@ export default function ProviderProfile() {
           <div className="lg:col-span-2 space-y-8">
             
             {/* Practice Info */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Practice Information</h2>
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                  <HiLocationMarker className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">Practice Information</h2>
+              </div>
               <div className="space-y-4">
-                <div>
-                  <h3 className="font-medium text-gray-900">{provider.practice}</h3>
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4">
+                  <h3 className="font-medium text-gray-900 mb-2">{provider.practice}</h3>
                   <div className="flex items-start mt-2 text-gray-600">
-                    <HiLocationMarker className="w-5 h-5 mr-2 mt-0.5 text-gray-400" />
+                    <HiLocationMarker className="w-5 h-5 mr-2 mt-0.5 text-blue-500" />
                     <div>
-                      <p>{provider.address}</p>
+                      <p className="font-medium">{provider.address}</p>
                       <p>{provider.city}, {provider.state} {provider.zipCode}</p>
                     </div>
                   </div>
@@ -103,26 +127,47 @@ export default function ProviderProfile() {
             </div>
 
             {/* Bio & About */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">About</h2>
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                  <HiAcademicCap className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">About {provider.name.split(' ')[0]}</h2>
+              </div>
               <div className="prose prose-gray max-w-none">
-                <p className="text-gray-700 leading-relaxed">{provider.bio}</p>
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4">
+                  <p className="text-gray-700 leading-relaxed">{provider.bio}</p>
+                </div>
               </div>
             </div>
 
             {/* Premier: About Clinic */}
             {provider.tier === 'premier' && provider.aboutClinic && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">About Our Clinic</h2>
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-6m-8 0H3m2 0h6M9 7h6m-6 4h6m-6 4h6" />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-900">About Our Clinic</h2>
+                </div>
                 <div className="prose prose-gray max-w-none">
-                  <p className="text-gray-700 leading-relaxed">{provider.aboutClinic}</p>
+                  <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-4">
+                    <p className="text-gray-700 leading-relaxed">{provider.aboutClinic}</p>
+                  </div>
                 </div>
               </div>
             )}
 
             {/* Specializations & Conditions */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Specializations & Conditions Treated</h2>
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-3">
+                  <HiStar className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">Specializations & Conditions Treated</h2>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

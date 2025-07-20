@@ -9,6 +9,7 @@ declare module "react-router" {
 type Params = {
   "/": {};
   "/home": {};
+  "/about": {};
   "/providers": {};
   "/providers-enhanced": {};
   "/provider/:id": {
