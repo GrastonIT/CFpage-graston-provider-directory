@@ -1,31 +1,100 @@
 // Provider data service
-// This file contains mock data based on real Graston Technique providers
-// In production, this would be replaced with API calls to the actual Graston API
+// Enhanced data model based on Graston Technique Provider Directory Blueprint
+// Supports Basic/Preferred/Premier tier system
+
+export type ProviderTier = 'basic' | 'preferred' | 'premier';
+export type ClinicianType = 'PT' | 'DC' | 'LMT' | 'OT' | 'MD' | 'DPT' | 'ATC' | 'Other';
+export type GrastonLevel = 'M1' | 'M2' | 'Basic' | 'Advanced' | 'Specialist' | 'Instructor';
 
 export interface Provider {
   id: number;
   name: string;
   credentials: string;
+  
+  // Professional Details
+  clinicianType: ClinicianType;
   specialty: string;
   practice: string;
+  tier: ProviderTier;
+  searchPriority: number; // Higher = appears first in results
+  
+  // Location & Contact
   address: string;
   city: string;
   state: string;
   zipCode: string;
   country: string;
+  position: [number, number]; // [latitude, longitude]
   phone?: string;
   email?: string;
   website?: string;
-  position: [number, number]; // [latitude, longitude]
-  description: string;
+  bookingUrl?: string;
+  
+  // Social Media (Preferred+ only)
+  socialMedia?: {
+    facebook?: string;
+    instagram?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+  
+  // Profile Content
+  bio: string;
+  bioMaxLength: number; // 200 basic, 700 preferred, 2500 premier
+  yearsExperience: number;
+  
+  // Professional Details
+  grastonLevel: GrastonLevel;
   certifications: string[];
   specializations: string[];
   languages: string[];
-  patients: string[];
-  yearsExperience: number;
-  grastonLevel: 'Basic' | 'Advanced' | 'Specialist' | 'Instructor';
+  patientTypes: string[]; // pediatric, geriatric, adult, athlete
+  conditionsTreated: string[];
+  insuranceAccepted: string[];
+  
+  // Education & Training
+  education: Array<{
+    degree: string;
+    institution: string;
+    year: number;
+  }>;
+  
+  boardCertifications: string[];
+  
+  trainings: Array<{
+    name: string;
+    date: string;
+    ceuValue: number;
+    certificateUrl?: string;
+  }>;
+  
+  totalCEUs: number;
+  associations: string[];
+  awards: Array<{
+    title: string;
+    year: number;
+    organization: string;
+  }>;
+  
+  // Premier Features
+  aboutClinic?: string; // WYSIWYG content (Premier only)
+  gallery?: string[]; // Image URLs (Premier only)
+  introVideo?: string; // Video embed URL (Premier only)
+  
+  // Analytics
+  analytics: {
+    views30d: number;
+    leads30d: number;
+    clicks30d: number;
+    lastSyncDate: string;
+  };
+  
+  // Metadata
   profileImage?: string;
+  profileStatus: 'draft' | 'pending' | 'published' | 'suspended';
   lastUpdated: string;
+  linkedUserId?: number;
+  overrideExpirationDate?: string;
 }
 
 // Mock data based on real Graston Technique providers from the API

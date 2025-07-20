@@ -10,5 +10,7 @@ export default [
   layout("routes/mainLayout.tsx", [
     route("/home", "routes/home.tsx"),
     route("/providers", "routes/providers.tsx"),
+    route("/providers-enhanced", "routes/providersEnhanced.tsx"),
+    route("/provider/:id", "routes/provider.$id.tsx"),
   ]),
 ] satisfies RouteConfig;

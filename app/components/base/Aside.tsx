@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { HiHome } from "react-icons/hi";
 import { HiMapPin } from "react-icons/hi2";
-import { HiUserGroup } from "react-icons/hi2";
+import { HiUserGroup, HiStar } from "react-icons/hi2";
 
 export default function Aside() {
   const baseIconClassName =
@@ -20,6 +20,13 @@ export default function Aside() {
       ),
       title: "Providers",
       to: "/providers",
+    },
+    {
+      icon: (className: string) => (
+        <HiStar className={`${className} ${baseIconClassName}`} />
+      ),
+      title: "Enhanced Directory",
+      to: "/providers-enhanced",
     },
     {
       icon: (className: string) => (

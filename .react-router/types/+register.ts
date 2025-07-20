@@ -10,4 +10,8 @@ type Params = {
   "/": {};
   "/home": {};
   "/providers": {};
+  "/providers-enhanced": {};
+  "/provider/:id": {
+    "id": string;
+  };
 };
