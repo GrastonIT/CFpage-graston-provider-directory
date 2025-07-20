@@ -48,12 +48,12 @@ export function SearchBar({ placeholder, onSearch }: SearchBarProps) {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="w-full p-3 pl-10 pr-12 border rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        className="w-full p-3 pl-10 pr-12 border border-[var(--graston-light-blue)] rounded-full shadow-sm focus:ring-2 focus:ring-[var(--graston-teal)] focus:outline-none focus:border-[var(--graston-teal)]"
       />
-      <FaSearch className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-400" />
+      <FaSearch className="absolute top-1/2 left-4 transform -translate-y-1/2 text-[var(--graston-gray)]" />
       <button
         type="submit"
-        className="absolute top-1/2 right-3 transform -translate-y-1/2 px-3 py-1 bg-blue-500 text-white text-sm rounded-full hover:bg-blue-600 transition-colors"
+        className="absolute top-1/2 right-3 transform -translate-y-1/2 px-3 py-1 bg-[var(--graston-teal)] text-white text-sm rounded-full hover:bg-[var(--graston-blue)] transition-colors"
       >
         Search
       </button>

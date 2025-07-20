@@ -13,3 +13,16 @@
   --graston-slate: #7C9699;
   --graston-gray: #435760;
 }
+
+/* Custom components */
+.graston-gradient-primary {
+  background: linear-gradient(135deg, var(--graston-teal) 0%, var(--graston-blue) 100%);
+}
+
+.graston-gradient-secondary {
+  background: linear-gradient(135deg, var(--graston-coral) 0%, var(--graston-yellow) 100%);
+}
+
+.graston-shadow {
+  box-shadow: 0 10px 25px -5px rgba(5, 122, 99, 0.1), 0 10px 10px -5px rgba(5, 122, 99, 0.04);
+}

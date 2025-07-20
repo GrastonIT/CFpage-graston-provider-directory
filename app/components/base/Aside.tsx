@@ -30,14 +30,27 @@ export default function Aside() {
 
   return (
     <aside className="p-4 h-svh">
-      <div className="bg-gradient-to-b from-slate-800 to-slate-900 p-6 rounded-2xl h-full shadow-2xl border border-slate-700">
+      <div className="bg-gradient-to-b from-[var(--graston-dark)] to-[var(--graston-gray)] p-6 rounded-2xl h-full shadow-2xl border border-[var(--graston-slate)]">
         <div className="flex flex-col space-y-4">
           {/* Logo/Brand */}
           <div className="mb-8 text-center">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mx-auto mb-3 flex items-center justify-center">
-              <HiStar className="w-6 h-6 text-white" />
+            <div className="w-16 h-16 bg-gradient-to-r from-[var(--graston-teal)] to-[var(--graston-blue)] rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
+              <img 
+                src="https://grastontechnique.com/wp-content/uploads/2021/11/Graston-Technique-Official-Logo-1.png" 
+                alt="Graston Technique" 
+                className="w-12 h-12 object-contain"
+                onError={(e) => {
+                  // Fallback to initials if logo fails to load
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling.style.display = 'flex';
+                }}
+              />
+              <div className="w-12 h-12 hidden items-center justify-center text-white font-bold text-lg">
+                GT
+              </div>
             </div>
-            <h2 className="text-white text-sm font-semibold opacity-90">Graston Directory</h2>
+            <h2 className="text-white text-sm font-semibold opacity-90">Graston Technique</h2>
+            <p className="text-[var(--graston-light-blue)] text-xs opacity-75">Provider Directory</p>
           </div>
 
           {links.map((link) => {
@@ -54,23 +67,23 @@ export default function Aside() {
                 <div className={`
                   relative p-4 rounded-xl transition-all duration-200 
                   ${isActive
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg'
-                    : 'hover:bg-slate-700 hover:shadow-md'
+                    ? 'bg-gradient-to-r from-[var(--graston-teal)] to-[var(--graston-blue)] shadow-lg'
+                    : 'hover:bg-[var(--graston-slate)] hover:shadow-md'
                   }
                 `}>
                   <Icon className={`
                     w-6 h-6 transition-colors duration-200
                     ${isActive
                       ? 'text-white'
-                      : 'text-slate-400 group-hover:text-blue-400'
+                      : 'text-[var(--graston-light-blue)] group-hover:text-[var(--graston-coral)]'
                     }
                   `} />
 
                   {/* Tooltip */}
                   <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-                    <div className="bg-slate-900 text-white text-sm px-3 py-2 rounded-lg shadow-lg border border-slate-700 whitespace-nowrap">
+                    <div className="bg-[var(--graston-dark)] text-white text-sm px-3 py-2 rounded-lg shadow-lg border border-[var(--graston-slate)] whitespace-nowrap">
                       {link.title}
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-slate-900 border-l border-b border-slate-700 rotate-45"></div>
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-2 h-2 bg-[var(--graston-dark)] border-l border-b border-[var(--graston-slate)] rotate-45"></div>
                     </div>
                   </div>
                 </div>
@@ -81,8 +94,8 @@ export default function Aside() {
           {/* Status indicator */}
           <div className="mt-auto pt-8">
             <div className="text-center">
-              <div className="w-3 h-3 bg-green-500 rounded-full mx-auto mb-2 animate-pulse"></div>
-              <p className="text-slate-400 text-xs">System Online</p>
+              <div className="w-3 h-3 bg-[var(--graston-coral)] rounded-full mx-auto mb-2 animate-pulse"></div>
+              <p className="text-[var(--graston-light-blue)] text-xs">System Online</p>
             </div>
           </div>
         </div>

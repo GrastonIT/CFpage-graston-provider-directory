@@ -18,11 +18,25 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
         : truncateBio(provider.bio, 250);
 
     return (
-        <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-200">
-            {/* Header with Tier Badge */}
+        <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:border-[var(--graston-teal)]">
+            {/* Header with Profile Image and Tier Badge */}
             <div className="relative">
-                {provider.profileImage && (
-                    <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                {provider.profileImage ? (
+                    <div className="h-32 bg-gradient-to-r from-[var(--graston-teal)] to-[var(--graston-blue)] flex items-center justify-center">
+                        <img 
+                            src={provider.profileImage} 
+                            alt={provider.name}
+                            className="w-20 h-20 rounded-full border-4 border-white object-cover shadow-lg"
+                        />
+                    </div>
+                ) : (
+                    <div className="h-32 bg-gradient-to-r from-[var(--graston-teal)] to-[var(--graston-blue)] flex items-center justify-center">
+                        <div className="w-20 h-20 rounded-full border-4 border-white bg-white flex items-center justify-center shadow-lg">
+                            <span className="text-2xl font-bold text-[var(--graston-blue)]">
+                                {provider.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
                 )}
                 <div className="absolute top-3 right-3">
                     <TierBadge tier={provider.tier} size="sm" />
@@ -33,17 +47,17 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                 {/* Provider Info */}
                 <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 mb-1">
+                        <h3 className="text-xl font-bold text-[var(--graston-dark)] mb-1">
                             {provider.name}
                         </h3>
-                        <p className="text-blue-600 font-medium mb-1">{provider.credentials}</p>
-                        <p className="text-gray-600 text-sm">{provider.specialty}</p>
-                        <p className="text-gray-700 font-medium">{provider.practice}</p>
+                        <p className="text-[var(--graston-blue)] font-medium mb-1">{provider.credentials}</p>
+                        <p className="text-[var(--graston-gray)] text-sm">{provider.specialty}</p>
+                        <p className="text-[var(--graston-dark)] font-medium">{provider.practice}</p>
                     </div>
 
                     {/* Analytics (Preferred+ only) */}
                     {provider.tier !== 'basic' && (
-                        <div className="flex items-center text-gray-500 text-sm">
+                        <div className="flex items-center text-[var(--graston-slate)] text-sm">
                             <HiEye className="w-4 h-4 mr-1" />
                             <span>{provider.analytics.views30d}</span>
                         </div>
@@ -51,13 +65,13 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                 </div>
 
                 {/* Location */}
-                <div className="flex items-center text-gray-600 mb-3">
-                    <HiLocationMarker className="w-4 h-4 mr-2 text-gray-400" />
+                <div className="flex items-center text-[var(--graston-gray)] mb-3">
+                    <HiLocationMarker className="w-4 h-4 mr-2 text-[var(--graston-coral)]" />
                     <span className="text-sm">{provider.city}, {provider.state}</span>
                 </div>
 
                 {/* Bio */}
-                <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                <p className="text-[var(--graston-dark)] text-sm mb-4 leading-relaxed">
                     {displayBio}
                 </p>
 
@@ -67,13 +81,13 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                         {provider.specializations.slice(0, 3).map((spec, index) => (
                             <span
                                 key={index}
-                                className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200"
+                                className="px-3 py-1 bg-[var(--graston-light-blue)] text-[var(--graston-blue)] text-xs rounded-full border border-[var(--graston-teal)]"
                             >
                                 {spec}
                             </span>
                         ))}
                         {provider.specializations.length > 3 && (
-                            <span className="px-2 py-1 bg-gray-50 text-gray-600 text-xs rounded-full">
+                            <span className="px-3 py-1 bg-gray-50 text-[var(--graston-gray)] text-xs rounded-full">
                                 +{provider.specializations.length - 3} more
                             </span>
                         )}
@@ -83,8 +97,8 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                 {/* Graston Level & Experience */}
                 <div className="flex items-center justify-between mb-4 text-sm">
                     <div className="flex items-center">
-                        <HiStar className="w-4 h-4 mr-1 text-yellow-500" />
-                        <span className="text-gray-600">
+                        <HiStar className="w-4 h-4 mr-1 text-[var(--graston-yellow)]" />
+                        <span className="text-[var(--graston-gray)]">
                             Graston {provider.grastonLevel} • {provider.yearsExperience} years
                         </span>
                     </div>
@@ -97,7 +111,7 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                         {provider.phone && (
                             <a
                                 href={`tel:${provider.phone}`}
-                                className="flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm"
+                                className="flex items-center text-[var(--graston-blue)] hover:text-[var(--graston-teal)] transition-colors text-sm"
                             >
                                 <HiPhone className="w-4 h-4 mr-1" />
                                 <span>Call</span>
@@ -110,7 +124,7 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                                 href={provider.website}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm"
+                                className="flex items-center text-[var(--graston-blue)] hover:text-[var(--graston-teal)] transition-colors text-sm"
                             >
                                 <HiGlobeAlt className="w-4 h-4 mr-1" />
                                 <span>Website</span>
@@ -123,7 +137,7 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                                 href={provider.bookingUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors"
+                                className="px-3 py-1 bg-[var(--graston-teal)] text-white text-sm rounded-md hover:bg-[var(--graston-blue)] transition-colors"
                             >
                                 Book Now
                             </a>
@@ -133,7 +147,7 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
                     {/* View Profile Link */}
                     <Link
                         to={`/provider/${provider.id}`}
-                        className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                        className="text-[var(--graston-blue)] hover:text-[var(--graston-teal)] font-medium text-sm transition-colors"
                     >
                         View Profile →
                     </Link>

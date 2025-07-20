@@ -15,9 +15,9 @@ export function TierBadge({ tier, size = 'md' }: TierBadgeProps) {
     };
 
     const tierClasses = {
-        basic: "bg-gray-100 text-gray-700 border-gray-300",
-        preferred: "bg-blue-100 text-blue-700 border-blue-300",
-        premier: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-purple-300"
+        basic: "bg-gray-100 text-[var(--graston-gray)] border-gray-300",
+        preferred: "bg-[var(--graston-light-blue)] text-[var(--graston-blue)] border-[var(--graston-teal)]",
+        premier: "bg-gradient-to-r from-[var(--graston-coral)] to-[var(--graston-yellow)] text-[var(--graston-dark)] border-[var(--graston-coral)]"
     };
 
     const tierLabels = {
