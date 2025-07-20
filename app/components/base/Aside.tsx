@@ -35,9 +35,9 @@ export default function Aside() {
           {/* Logo/Brand */}
           <div className="mb-8 text-center">
             <div className="w-16 h-16 bg-gradient-to-r from-[var(--graston-teal)] to-[var(--graston-blue)] rounded-xl mx-auto mb-3 flex items-center justify-center shadow-lg">
-              <img 
-                src="https://grastontechnique.com/wp-content/uploads/2021/11/Graston-Technique-Official-Logo-1.png" 
-                alt="Graston Technique" 
+              <img
+                src="https://grastontechnique.com/wp-content/uploads/2021/11/Graston-Technique-Official-Logo-1.png"
+                alt="Graston Technique"
                 className="w-12 h-12 object-contain"
                 onError={(e) => {
                   // Fallback to initials if logo fails to load

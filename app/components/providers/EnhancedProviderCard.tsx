@@ -23,8 +23,8 @@ export function EnhancedProviderCard({ provider }: EnhancedProviderCardProps) {
             <div className="relative">
                 {provider.profileImage ? (
                     <div className="h-32 bg-gradient-to-r from-[var(--graston-teal)] to-[var(--graston-blue)] flex items-center justify-center">
-                        <img 
-                            src={provider.profileImage} 
+                        <img
+                            src={provider.profileImage}
                             alt={provider.name}
                             className="w-20 h-20 rounded-full border-4 border-white object-cover shadow-lg"
                         />
