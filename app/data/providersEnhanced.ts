@@ -98,7 +98,7 @@ export interface Provider {
 }
 
 // Import CSV providers
-import { csvProviders, searchCsvProviders, getCsvProviderById, getUniqueCsvSpecialties, getUniqueCsvStates, getUniqueCsvLanguages, getUniqueCsvPatientTypes } from './providersCsvData';
+import { csvProviders, getCsvProviderById, getUniqueCsvLanguages, getUniqueCsvPatientTypes, getUniqueCsvSpecialties, getUniqueCsvStates } from './providersCsvData';
 
 // Enhanced mock data showcasing the new tier system
 export const mockProviders: Provider[] = [

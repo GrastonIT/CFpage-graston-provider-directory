@@ -1,7 +1,7 @@
 // Provider data imported from CSV file and mapped to our Provider interface
 // This file contains real provider data from the membership_listings_import_filled_all.csv
 
-import type { Provider, ProviderTier, ClinicianType, GrastonLevel } from './providersEnhanced';
+import type { ClinicianType, GrastonLevel, Provider, ProviderTier } from './providersEnhanced';
 
 // Helper function to parse coordinates
 const parseCoordinates = (lat: string, lng: string): [number, number] => {

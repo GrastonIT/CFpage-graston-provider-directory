@@ -67,6 +67,29 @@ interface DirectoryMapClientProps {
 }
 
 export function DirectoryMapClient({ id, center, markers }: DirectoryMapClientProps) {
+    // Filter out providers with invalid coordinates
+    const validMarkers = markers.filter(provider => {
+        const [lat, lng] = provider.position;
+        return (
+            provider &&
+            provider.id &&
+            provider.name &&
+            provider.tier &&
+            Array.isArray(provider.position) &&
+            provider.position.length === 2 &&
+            typeof lat === 'number' &&
+            typeof lng === 'number' &&
+            !isNaN(lat) &&
+            !isNaN(lng) &&
+            lat >= -90 &&
+            lat <= 90 &&
+            lng >= -180 &&
+            lng <= 180 &&
+            lat !== 0 &&
+            lng !== 0
+        );
+    });
+
     return (
         <MapContainer
             id={id}
@@ -80,7 +103,7 @@ export function DirectoryMapClient({ id, center, markers }: DirectoryMapClientPr
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {markers.map(provider => (
+            {validMarkers.map(provider => (
                 <Marker
                     key={provider.id}
                     position={provider.position}
@@ -91,23 +114,23 @@ export function DirectoryMapClient({ id, center, markers }: DirectoryMapClientPr
                             {/* Header with Tier Badge */}
                             <div className="flex items-start justify-between">
                                 <div className="flex-1">
-                                    <h3 className="font-bold text-lg text-gray-800 leading-tight">{provider.name}</h3>
-                                    <p className="text-blue-600 font-medium">{provider.credentials}</p>
+                                    <h3 className="font-bold text-lg text-gray-800 leading-tight">{provider.name || 'Unknown Provider'}</h3>
+                                    <p className="text-blue-600 font-medium">{provider.credentials || ''}</p>
                                 </div>
                                 <div className={`
                   px-2 py-1 rounded-full text-xs font-semibold text-white ml-2
                   ${provider.tier === 'basic' ? 'bg-gray-500' :
                                         provider.tier === 'preferred' ? 'bg-teal-600' : 'bg-blue-600'}
                 `}>
-                                    {provider.tier.charAt(0).toUpperCase() + provider.tier.slice(1)}
+                                    {provider.tier ? provider.tier.charAt(0).toUpperCase() + provider.tier.slice(1) : 'Basic'}
                                 </div>
                             </div>
 
                             <div>
-                                <p className="font-medium text-gray-700">{provider.specialty}</p>
-                                <p className="text-gray-600">{provider.practice}</p>
+                                <p className="font-medium text-gray-700">{provider.specialty || 'Healthcare Provider'}</p>
+                                <p className="text-gray-600">{provider.practice || ''}</p>
                                 <p className="text-gray-500 text-xs mt-1">
-                                    📍 {provider.city}, {provider.state}
+                                    📍 {provider.city || ''}, {provider.state || ''}
                                 </p>
                             </div>
 
@@ -115,7 +138,7 @@ export function DirectoryMapClient({ id, center, markers }: DirectoryMapClientPr
                             <div className="flex items-center text-xs bg-gradient-to-r from-teal-50 to-blue-50 rounded p-2">
                                 <span className="text-yellow-600">⭐</span>
                                 <span className="ml-1 font-medium text-gray-700">
-                                    Graston {provider.grastonLevel} • {provider.yearsExperience} years exp.
+                                    Graston {provider.grastonLevel || 'Basic'} • {provider.yearsExperience || 0} years exp.
                                 </span>
                             </div>
 
@@ -150,7 +173,7 @@ export function DirectoryMapClient({ id, center, markers }: DirectoryMapClientPr
                             </div>
 
                             {/* Specializations */}
-                            {provider.specializations.length > 0 && (
+                            {provider.specializations && provider.specializations.length > 0 && (
                                 <div className="border-t pt-2">
                                     <p className="text-xs font-medium text-gray-700 mb-1">Specializations:</p>
                                     <div className="flex flex-wrap gap-1">
