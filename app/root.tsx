@@ -29,6 +29,46 @@ export const meta: MetaFunction = () => [
   {
     title: "Graston Technique® Provider Directory",
   },
+  {
+    name: "description",
+    content: "Find certified Graston Technique healthcare providers near you. Search by location, specialty, and certification level. Interactive map with detailed provider profiles.",
+  },
+  {
+    name: "keywords",
+    content: "Graston Technique, healthcare providers, physical therapy, chiropractor, massage therapy, sports medicine, injury recovery, manual therapy",
+  },
+  {
+    name: "viewport",
+    content: "width=device-width, initial-scale=1",
+  },
+  {
+    property: "og:title",
+    content: "Graston Technique® Provider Directory",
+  },
+  {
+    property: "og:description",
+    content: "Find certified Graston Technique healthcare providers near you. Advanced search and filtering with interactive maps.",
+  },
+  {
+    property: "og:type",
+    content: "website",
+  },
+  {
+    property: "og:image",
+    content: "/banner.jpg",
+  },
+  {
+    name: "twitter:card",
+    content: "summary_large_image",
+  },
+  {
+    name: "twitter:title",
+    content: "Graston Technique® Provider Directory",
+  },
+  {
+    name: "twitter:description",
+    content: "Find certified Graston Technique healthcare providers near you.",
+  },
 ];
 
 export const loader = ({ context }: Route.LoaderArgs) => {
