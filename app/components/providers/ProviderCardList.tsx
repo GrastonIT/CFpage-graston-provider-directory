@@ -1,6 +1,6 @@
 
-import { ProviderCard } from "./ProviderCard";
 import type { Provider } from "../../data/providers";
+import { ProviderCard } from "./ProviderCard";
 
 export function ProviderCardList({ providers }: { providers: Provider[] }) {
   return (

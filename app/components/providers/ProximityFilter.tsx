@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HiLocationMarker } from 'react-icons/hi';
 
 interface ProximityFilterProps {
@@ -8,10 +8,10 @@ interface ProximityFilterProps {
   currentDistance: number;
 }
 
-export function ProximityFilter({ 
-  onProximityChange, 
-  onLocationChange, 
-  currentDistance 
+export function ProximityFilter({
+  onProximityChange,
+  onLocationChange,
+  currentDistance
 }: ProximityFilterProps) {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string>('');
@@ -89,8 +89,8 @@ export function ProximityFilter({
           disabled={isGettingLocation}
           className={`
             w-full flex items-center justify-center px-4 py-3 rounded-lg text-sm font-medium transition-colors
-            ${userLocation 
-              ? 'bg-green-100 text-green-800 border border-green-300' 
+            ${userLocation
+              ? 'bg-green-100 text-green-800 border border-green-300'
               : 'bg-gradient-to-r from-teal-600 to-blue-600 text-white hover:from-teal-700 hover:to-blue-700'
             }
             ${isGettingLocation ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
@@ -123,7 +123,7 @@ export function ProximityFilter({
           <label className="block text-sm font-medium text-gray-700">
             Search within:
           </label>
-          
+
           <div className="grid grid-cols-3 gap-2">
             {distanceOptions.map((distance) => (
               <button

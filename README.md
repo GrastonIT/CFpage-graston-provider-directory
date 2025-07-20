@@ -5,23 +5,27 @@ A comprehensive web application for finding Graston Technique certified healthca
 ## 🌟 Features
 
 ### 🔍 **Advanced Search & Filtering**
+
 - **Text Search**: Search by provider name, specialty, location, or practice name
 - **Dynamic Filters**: Filter by specialty, languages spoken, patient types, and Graston certification level
 - **Real-time Results**: Instant updates with URL parameter integration
 - **Clear Filters**: Easy reset of all applied filters
 
 ### �️ **Interactive Map**
+
 - **Provider Locations**: Visual representation of all provider locations
 - **Detailed Popups**: Comprehensive provider information in map markers
 - **Responsive Design**: Optimized for desktop and mobile viewing
 
 ### � **Provider Profiles**
+
 - **Comprehensive Information**: Name, credentials, specializations, contact details
 - **Certification Levels**: Visual badges for Graston certification levels (Basic, Advanced, Specialist, Instructor)
 - **Specialization Tags**: Easy-to-read specialty indicators
 - **Contact Integration**: Direct phone and email links
 
 ### 📊 **Data Management**
+
 - **TypeScript Integration**: Fully typed provider data structure
 - **Mock API**: Realistic data service simulating real Graston API
 - **Server-Side Rendering**: React Router loaders for optimal performance
@@ -38,29 +42,33 @@ A comprehensive web application for finding Graston Technique certified healthca
 
 ## � Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - Git
 
 ## 🛠️ Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/JdarlingGT/CFpage-graston-provider-directory.git
    cd CFpage-graston-provider-directory
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    ```
 
 4. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -104,6 +112,7 @@ app/
 ## 🎯 Key Features Explained
 
 ### Provider Data Structure
+
 ```typescript
 interface Provider {
   id: number;
@@ -120,17 +129,19 @@ interface Provider {
   languages: string[];
   patients: string[];
   yearsExperience: number;
-  grastonLevel: 'Basic' | 'Advanced' | 'Specialist' | 'Instructor';
+  grastonLevel: "Basic" | "Advanced" | "Specialist" | "Instructor";
 }
 ```
 
 ### Search Functionality
+
 - **URL Integration**: Search terms and filters are reflected in the URL
 - **Server-Side Loading**: React Router loaders handle data fetching
 - **Multi-field Search**: Searches across name, specialty, location, and practice fields
 - **Combined Filtering**: Search works alongside specialty and location filters
 
 ### Responsive Design
+
 - **Mobile-First**: Optimized for mobile devices
 - **Flexible Layout**: Sidebar filters stack on mobile
 - **Touch-Friendly**: Large touch targets for mobile interaction
@@ -145,11 +156,13 @@ Currently uses mock data based on real Graston Technique providers. The data ser
 - Helper functions for filter options
 
 To integrate with real Graston API:
+
 1. Replace mock functions in `providers.ts`
 2. Update API endpoints
 3. Adjust data structure if needed
 
 D1 is perfect for:
+
 - Web applications requiring global data access
 - Projects needing SQL without managing infrastructure
 - Applications with moderate data requirements (up to 100GB per database)
@@ -165,15 +178,17 @@ npm install
 ## ⚙️ Configuration
 
 1. Create a D1 Database in Cloudflare:
+
    - Go to Cloudflare Dashboard > Workers & Pages
    - Click on "D1" in the sidebar
    - Click "Create database"
    - Note down the `database_name` and `database_id`
 
 2. Configure `wrangler.toml`:
+
    ```toml
    name = "your-project-name"
-   
+
    [vars]
    JWT_PRIVATE = """
    Your private key for JWT
@@ -189,17 +204,20 @@ npm install
    ```
 
 3. Generate JWT Keys:
+
    ```bash
    # Using OpenSSL to generate keys
    # Generate private key
    openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
-   
+
    # Generate public key from private key
    openssl rsa -pubout -in private_key.pem -out public_key.pem
    ```
+
    Copy the contents of these files into the respective JWT_PRIVATE and JWT_PUBLIC fields in `wrangler.toml`
 
 4. Environment Variables: 🔐
+
 ```bash
 # Create a .env file in the root directory
 touch .env
@@ -211,6 +229,7 @@ CLOUDFLARE_D1_TOKEN="your_d1_token"
 ```
 
 5. Development: 🛠️
+
 ```bash
 # Install dependencies
 npm install
@@ -224,6 +243,7 @@ npm run dev
 ## 🏗️ Building for Production
 
 Build your application:
+
 ```bash
 npm run build
 ```
@@ -233,6 +253,7 @@ The optimized build will be available in the `dist` directory.
 ## 🚀 Deployment
 
 Deploy to Cloudflare Pages:
+
 ```bash
 npm run deploy
 ```
@@ -240,6 +261,7 @@ npm run deploy
 > **Note**: Make sure you have configured your Cloudflare account and set up the necessary environment variables.
 
 ## 📁 Project Structure
+
 ```
 react-router-cf/
 ├── app/
@@ -269,6 +291,7 @@ react-router-cf/
 ## 🔍 Important Development Notes
 
 ### Load Context File
+
 The `load-context.ts` file in the server directory is crucial for context availability and type safety in your application. It defines the context and types for your loader and action that will be available throughout your routes. After making any changes to this file, you must run:
 
 ```bash

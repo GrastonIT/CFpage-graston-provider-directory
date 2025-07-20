@@ -1,7 +1,7 @@
-import BaseService from "./base";
-import type { Kysely } from "kysely";
 import * as jose from "jose";
+import type { Kysely } from "kysely";
 import type { Tables } from "../database/tables";
+import BaseService from "./base";
 
 export async function getKeyPair(algorithm: string, priv: string, pub: string) {
   const privateKey = await jose.importPKCS8(priv, algorithm);

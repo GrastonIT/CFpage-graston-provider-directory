@@ -14,13 +14,13 @@ export function FilterGroup({ facets }: FilterGroupProps) {
 
   const handleFilterChange = (filterKey: string, value: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
-    
+
     if (value) {
       newSearchParams.set(filterKey, value);
     } else {
       newSearchParams.delete(filterKey);
     }
-    
+
     setSearchParams(newSearchParams);
   };
 
@@ -36,7 +36,7 @@ export function FilterGroup({ facets }: FilterGroupProps) {
       {filterCategories.map((category) => (
         <div key={category.key} className="mb-3">
           <label className="block font-semibold text-gray-700 mb-1">{category.label}</label>
-          <select 
+          <select
             name={category.key}
             value={searchParams.get(category.key) || ""}
             onChange={(e) => handleFilterChange(category.key, e.target.value)}
@@ -49,24 +49,24 @@ export function FilterGroup({ facets }: FilterGroupProps) {
           </select>
         </div>
       ))}
-      
+
       {/* Clear Filters Button */}
-      {Array.from(searchParams.entries()).some(([key]) => 
+      {Array.from(searchParams.entries()).some(([key]) =>
         ['specialty', 'languages', 'patients', 'grastonLevel'].includes(key)
       ) && (
-        <button
-          onClick={() => {
-            const newSearchParams = new URLSearchParams(searchParams);
-            ['specialty', 'languages', 'patients', 'grastonLevel'].forEach(key => {
-              newSearchParams.delete(key);
-            });
-            setSearchParams(newSearchParams);
-          }}
-          className="w-full mt-3 px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-        >
-          Clear Filters
-        </button>
-      )}
+          <button
+            onClick={() => {
+              const newSearchParams = new URLSearchParams(searchParams);
+              ['specialty', 'languages', 'patients', 'grastonLevel'].forEach(key => {
+                newSearchParams.delete(key);
+              });
+              setSearchParams(newSearchParams);
+            }}
+            className="w-full mt-3 px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+          >
+            Clear Filters
+          </button>
+        )}
     </div>
   );
 }

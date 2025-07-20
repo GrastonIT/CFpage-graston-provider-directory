@@ -5,10 +5,12 @@
 ### 1. Connect Repository to Cloudflare Pages
 
 1. **Login to Cloudflare Dashboard**
+
    - Go to [dash.cloudflare.com](https://dash.cloudflare.com)
    - Navigate to **Pages** section
 
 2. **Create New Project**
+
    - Click **"Create a project"**
    - Select **"Connect to Git"**
    - Choose **GitHub** and authorize Cloudflare
@@ -22,11 +24,13 @@
 **Framework preset**: `None` (or `Vite` if available)
 
 **Build configurations**:
+
 - **Build command**: `npm run build`
 - **Build output directory**: `dist`
 - **Root directory**: `/` (leave empty)
 
-**Environment variables**: 
+**Environment variables**:
+
 - Add any needed environment variables in the Cloudflare Pages dashboard
 - **Important**: Never commit real API keys to Git
 
@@ -44,6 +48,7 @@
 ## Build Configuration
 
 The project is configured with:
+
 - **Build tool**: Vite
 - **Output**: Static files in `dist/` directory
 - **Node.js version**: 18+ (automatically detected)
@@ -51,6 +56,7 @@ The project is configured with:
 ## Environment Variables
 
 Set these in Cloudflare Pages dashboard if needed:
+
 - `VITE_APP_NAME`: Application name
 - `VITE_API_BASE_URL`: API endpoint URL
 - Any other environment variables from `.env.example`

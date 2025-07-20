@@ -1,7 +1,7 @@
 
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useSearchParams } from "react-router";
-import { useEffect, useState } from "react";
 
 interface SearchBarProps {
   placeholder: string;
@@ -19,13 +19,13 @@ export function SearchBar({ placeholder, onSearch }: SearchBarProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newSearchParams = new URLSearchParams(searchParams);
-    
+
     if (searchValue.trim()) {
       newSearchParams.set("q", searchValue.trim());
     } else {
       newSearchParams.delete("q");
     }
-    
+
     setSearchParams(newSearchParams);
     onSearch?.(searchValue.trim());
   };
