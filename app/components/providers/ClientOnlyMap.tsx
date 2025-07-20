@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { LoadingSpinner } from '../base/LoadingAndError';
-import type { Provider } from '../../data/providers';
+import type { Provider } from '../../data/providersEnhanced';
 
 interface ClientOnlyMapProps {
   id: string;

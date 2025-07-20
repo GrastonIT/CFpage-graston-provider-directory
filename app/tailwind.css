@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Graston Technique Brand Colors */
+:root {
+  --graston-teal: #057A63;
+  --graston-blue: #0558A5;
+  --graston-light-blue: #A4D8C2;
+  --graston-coral: #FC7961;
+  --graston-yellow: #FFE47F;
+  --graston-dark: #333730;
+  --graston-slate: #7C9699;
+  --graston-gray: #435760;
+}

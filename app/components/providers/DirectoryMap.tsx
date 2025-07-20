@@ -1,5 +1,5 @@
 
-import type { Provider } from '../../data/providers';
+import type { Provider } from '../../data/providersEnhanced';
 import { ClientOnlyMap } from './ClientOnlyMap';
 
 interface DirectoryMapProps {
