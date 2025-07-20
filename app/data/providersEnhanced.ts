@@ -97,6 +97,9 @@ export interface Provider {
   overrideExpirationDate?: string;
 }
 
+// Import CSV providers
+import { csvProviders, searchCsvProviders, getCsvProviderById, getUniqueCsvSpecialties, getUniqueCsvStates, getUniqueCsvLanguages, getUniqueCsvPatientTypes } from './providersCsvData';
+
 // Enhanced mock data showcasing the new tier system
 export const mockProviders: Provider[] = [
   {
@@ -430,41 +433,38 @@ export const mockProviders: Provider[] = [
 ];
 
 // Helper functions for filtering and search
-export function getUniqueSpecialties(): string[] {
-  return [...new Set(mockProviders.map(p => p.specialty))].sort();
-}
-
-export function getUniqueStates(): string[] {
-  return [...new Set(mockProviders.map(p => p.state))].sort();
-}
-
-export function getUniqueLanguages(): string[] {
-  return [...new Set(mockProviders.flatMap(p => p.languages))].sort();
-}
-
-export function getUniquePatientTypes(): string[] {
-  return [...new Set(mockProviders.flatMap(p => p.patientTypes))].sort();
-}
-
-export function getUniqueSpecializations(): string[] {
-  return [...new Set(mockProviders.flatMap(p => p.specializations))].sort();
-}
-
 export function getUniqueConditions(): string[] {
-  return [...new Set(mockProviders.flatMap(p => p.conditionsTreated))].sort();
+  const allConditions = new Set<string>();
+  
+  // Add CSV conditions
+  csvProviders.forEach(provider => {
+    provider.conditionsTreated.forEach(condition => allConditions.add(condition));
+  });
+  
+  // Add mock conditions
+  mockProviders.forEach(provider => {
+    provider.conditionsTreated.forEach(condition => allConditions.add(condition));
+  });
+  
+  return Array.from(allConditions).sort();
 }
 
 export function getProvidersByTier(tier: ProviderTier): Provider[] {
-  return mockProviders.filter(p => p.tier === tier);
+  // Combine CSV and mock providers
+  const allProviders = [...csvProviders, ...mockProviders];
+  return allProviders.filter(p => p.tier === tier);
 }
 
-export async function searchProviders(query: string): Promise<Provider[]> {
+export async function searchProviders(query: string = ''): Promise<Provider[]> {
   await new Promise(resolve => setTimeout(resolve, 300));
   
-  if (!query) return mockProviders.sort((a, b) => b.searchPriority - a.searchPriority);
+  // Combine CSV providers with mock providers for comprehensive data
+  const allProviders = [...csvProviders, ...mockProviders];
+  
+  if (!query) return allProviders.sort((a, b) => b.searchPriority - a.searchPriority);
   
   const lowerQuery = query.toLowerCase();
-  return mockProviders.filter(provider => 
+  return allProviders.filter(provider => 
     provider.name.toLowerCase().includes(lowerQuery) ||
     provider.specialty.toLowerCase().includes(lowerQuery) ||
     provider.practice.toLowerCase().includes(lowerQuery) ||
@@ -478,9 +478,86 @@ export async function searchProviders(query: string): Promise<Provider[]> {
 
 // Legacy support for existing components
 export async function getProviders(): Promise<Provider[]> {
-  return mockProviders.sort((a, b) => b.searchPriority - a.searchPriority);
+  // Combine CSV providers with mock providers
+  const allProviders = [...csvProviders, ...mockProviders];
+  return allProviders.sort((a, b) => b.searchPriority - a.searchPriority);
 }
 
 export async function getProviderById(id: number): Promise<Provider | null> {
+  // Check CSV providers first, then mock providers
+  const csvProvider = await getCsvProviderById(id);
+  if (csvProvider) return csvProvider;
+  
   return mockProviders.find(p => p.id === id) || null;
+}
+
+// Enhanced utility functions that combine both data sources
+export function getUniqueSpecialties(): string[] {
+  const csvSpecialties = getUniqueCsvSpecialties();
+  const mockSpecialties = Array.from(new Set(mockProviders.map(p => p.specialty)));
+  
+  const allSpecialties = new Set([...csvSpecialties, ...mockSpecialties]);
+  return Array.from(allSpecialties).sort();
+}
+
+export function getUniqueStates(): string[] {
+  const csvStates = getUniqueCsvStates();
+  const mockStates = Array.from(new Set(mockProviders.map(p => p.state)));
+  
+  const allStates = new Set([...csvStates, ...mockStates]);
+  return Array.from(allStates).sort();
+}
+
+export function getUniqueLanguages(): string[] {
+  const csvLanguages = getUniqueCsvLanguages();
+  const mockLanguages = new Set<string>();
+  mockProviders.forEach(provider => {
+    provider.languages.forEach(lang => mockLanguages.add(lang));
+  });
+  
+  const allLanguages = new Set([...csvLanguages, ...Array.from(mockLanguages)]);
+  return Array.from(allLanguages).sort();
+}
+
+export function getUniquePatientTypes(): string[] {
+  const csvPatientTypes = getUniqueCsvPatientTypes();
+  const mockPatientTypes = new Set<string>();
+  mockProviders.forEach(provider => {
+    provider.patientTypes.forEach(type => mockPatientTypes.add(type));
+  });
+  
+  const allPatientTypes = new Set([...csvPatientTypes, ...Array.from(mockPatientTypes)]);
+  return Array.from(allPatientTypes).sort();
+}
+
+export function getUniqueSpecializations(): string[] {
+  const allSpecializations = new Set<string>();
+  
+  // Add CSV specializations
+  csvProviders.forEach(provider => {
+    provider.specializations.forEach(spec => allSpecializations.add(spec));
+  });
+  
+  // Add mock specializations
+  mockProviders.forEach(provider => {
+    provider.specializations.forEach(spec => allSpecializations.add(spec));
+  });
+  
+  return Array.from(allSpecializations).sort();
+}
+
+export function getUniqueGrastonLevels(): string[] {
+  const allLevels = new Set<string>();
+  
+  // Add CSV levels
+  csvProviders.forEach(provider => {
+    allLevels.add(provider.grastonLevel);
+  });
+  
+  // Add mock levels
+  mockProviders.forEach(provider => {
+    allLevels.add(provider.grastonLevel);
+  });
+  
+  return Array.from(allLevels).sort();
 }
