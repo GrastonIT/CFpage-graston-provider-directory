@@ -1,31 +1,153 @@
-# React Router & Cloudflare Pages Template 🚀
+# Graston Provider Directory
 
-Modern web application template built with React Router and Cloudflare Pages integration 🌐.  
-Built this because I wanted a template that would allow me to deploy my React Router app on Cloudflare Pages quickly and easily! 🚀 There was no public template available at the time, so I decided to make one. And here it is! 🎉
+A comprehensive web application for finding Graston Technique certified healthcare providers. Built with React Router v7, TypeScript, and Cloudflare Pages.
 
-## 🚀 Features
+## 🌟 Features
 
-- ⚡ Vite for lightning-fast development
-- 🎯 React Router for seamless navigation
-- ☁️ Cloudflare Pages integration
-- 🌐 Cloudflare D1 integration
-- 🎨 TailwindCSS for styling
-- 📦 TypeScript support
-- 🔄 Hot Module Replacement (HMR)
-- 🗄️ Drizzle & Kysely for database management
-- 🎬 Framer Motion for animations
+### 🔍 **Advanced Search & Filtering**
+- **Text Search**: Search by provider name, specialty, location, or practice name
+- **Dynamic Filters**: Filter by specialty, languages spoken, patient types, and Graston certification level
+- **Real-time Results**: Instant updates with URL parameter integration
+- **Clear Filters**: Easy reset of all applied filters
 
-## 🗄️ About Cloudflare D1
+### �️ **Interactive Map**
+- **Provider Locations**: Visual representation of all provider locations
+- **Detailed Popups**: Comprehensive provider information in map markers
+- **Responsive Design**: Optimized for desktop and mobile viewing
 
-Cloudflare D1 is a serverless SQL database that runs on Cloudflare's global network. Key features include:
+### � **Provider Profiles**
+- **Comprehensive Information**: Name, credentials, specializations, contact details
+- **Certification Levels**: Visual badges for Graston certification levels (Basic, Advanced, Specialist, Instructor)
+- **Specialization Tags**: Easy-to-read specialty indicators
+- **Contact Integration**: Direct phone and email links
 
-- 📊 SQLite-compatible database built on libSQL
-- 🌐 Distributed across Cloudflare's global network
-- ⚡ Zero configuration required
-- 🔒 Automatic backups and high availability
-- 💰 Free tier with generous limits
-- 🚀 Low latency, as data is stored close to your users
-- 🔄 Seamless integration with Cloudflare Workers
+### 📊 **Data Management**
+- **TypeScript Integration**: Fully typed provider data structure
+- **Mock API**: Realistic data service simulating real Graston API
+- **Server-Side Rendering**: React Router loaders for optimal performance
+
+## 🚀 Technology Stack
+
+- **Framework**: React Router v7
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Mapping**: Leaflet with React-Leaflet
+- **Icons**: React Icons
+- **Deployment**: Cloudflare Pages
+- **Build Tool**: Vite
+
+## � Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- Git
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/JdarlingGT/CFpage-graston-provider-directory.git
+   cd CFpage-graston-provider-directory
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**
+   Navigate to `http://localhost:5173`
+
+## 📁 Project Structure
+
+```
+app/
+├── components/
+│   ├── base/                 # Reusable UI components
+│   │   ├── SearchBar.tsx    # Search functionality
+│   │   ├── LoadMoreButton.tsx
+│   │   └── Aside.tsx
+│   └── providers/           # Provider-specific components
+│       ├── ProviderCard.tsx      # Individual provider display
+│       ├── ProviderCardList.tsx  # Provider grid layout
+│       ├── FilterGroup.tsx       # Search filters
+│       ├── DirectoryMap.tsx      # Interactive map
+│       └── ProximityFilter.tsx   # Location-based filtering
+├── data/
+│   └── providers.ts         # Provider data service & types
+├── routes/
+│   ├── providers.tsx        # Main provider directory page
+│   ├── _index.tsx          # Homepage
+│   └── _layout.tsx         # Layout wrapper
+└── utils/
+    └── theme.ts            # Theme configuration
+```
+
+## 🔧 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run deploy` - Deploy to Cloudflare Pages
+- `npm run typecheck` - Run TypeScript checks
+
+## 🎯 Key Features Explained
+
+### Provider Data Structure
+```typescript
+interface Provider {
+  id: number;
+  name: string;
+  credentials: string;
+  specialty: string;
+  practice: string;
+  address: string;
+  city: string;
+  state: string;
+  position: [number, number]; // [latitude, longitude]
+  certifications: string[];
+  specializations: string[];
+  languages: string[];
+  patients: string[];
+  yearsExperience: number;
+  grastonLevel: 'Basic' | 'Advanced' | 'Specialist' | 'Instructor';
+}
+```
+
+### Search Functionality
+- **URL Integration**: Search terms and filters are reflected in the URL
+- **Server-Side Loading**: React Router loaders handle data fetching
+- **Multi-field Search**: Searches across name, specialty, location, and practice fields
+- **Combined Filtering**: Search works alongside specialty and location filters
+
+### Responsive Design
+- **Mobile-First**: Optimized for mobile devices
+- **Flexible Layout**: Sidebar filters stack on mobile
+- **Touch-Friendly**: Large touch targets for mobile interaction
+
+## 🌐 API Integration
+
+Currently uses mock data based on real Graston Technique providers. The data service (`app/data/providers.ts`) provides:
+
+- `getProviders()` - Fetch providers with optional filters
+- `searchProviders()` - Text-based provider search
+- `getProviderById()` - Individual provider lookup
+- Helper functions for filter options
+
+To integrate with real Graston API:
+1. Replace mock functions in `providers.ts`
+2. Update API endpoints
+3. Adjust data structure if needed
 
 D1 is perfect for:
 - Web applications requiring global data access
