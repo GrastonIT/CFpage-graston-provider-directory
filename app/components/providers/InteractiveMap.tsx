@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Provider } from '../../data/providersEnhanced';
+import * as ReactDOM from 'react-dom/client';
+import type { Provider } from '../../data/providers.types';
+import { MapPopupCard } from './MapPopupCard';
 
 interface InteractiveMapProps {
   providers: Provider[];
@@ -172,12 +174,12 @@ export function InteractiveMap({
     // Add/update provider markers
     providers.forEach(provider => {
       // Validate provider and position data
-      if (!provider || !provider.position || !Array.isArray(provider.position) || 
-          provider.position.length !== 2 || 
-          typeof provider.position[0] !== 'number' || 
-          typeof provider.position[1] !== 'number' ||
-          isNaN(provider.position[0]) || 
-          isNaN(provider.position[1])) {
+      if (!provider || !provider.position || !Array.isArray(provider.position) ||
+        provider.position.length !== 2 ||
+        typeof provider.position[0] !== 'number' ||
+        typeof provider.position[1] !== 'number' ||
+        isNaN(provider.position[0]) ||
+        isNaN(provider.position[1])) {
         return;
       }
 
@@ -194,10 +196,25 @@ export function InteractiveMap({
       if (markersRef.current[provider.id]) {
         markersRef.current[provider.id].setIcon(icon);
       } else {
-        const marker = L.marker(provider.position, { icon, riseOnHover: true })
+        const popupContent = document.createElement('div');
+        const root = ReactDOM.createRoot(popupContent);
+        root.render(<MapPopupCard provider={provider} />);
+
+        const marker = L.marker(provider.position, {
+          icon,
+          riseOnHover: true,
+          riseOffset: 250
+        })
           .addTo(map)
+          .bindPopup(popupContent, {
+            maxWidth: 320,
+            minWidth: 300,
+            className: 'provider-popup',
+            closeButton: false,
+            offset: [0, -20]
+          })
           .on('click', () => onProviderSelect?.(provider));
-        
+
         markersRef.current[provider.id] = marker;
       }
     });
@@ -223,7 +240,7 @@ export function InteractiveMap({
 
   useEffect(() => {
     if (!mapInstanceRef.current || !selectedProvider || !selectedProvider.position) return;
-    
+
     mapInstanceRef.current.flyTo(selectedProvider.position, 14, {
       animate: true,
       duration: 1
@@ -251,6 +268,20 @@ export function InteractiveMap({
                 .custom-tier-marker {
                     background: transparent;
                     border: none;
+                }
+                .provider-popup .leaflet-popup-content-wrapper {
+                    border-radius: 12px;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+                    padding: 0;
+                    overflow: hidden;
+                }
+                .provider-popup .leaflet-popup-content {
+                    margin: 0;
+                    line-height: 1.4;
+                }
+                .provider-popup .leaflet-popup-tip {
+                    background: white;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
                 }
             `}</style>
     </div>

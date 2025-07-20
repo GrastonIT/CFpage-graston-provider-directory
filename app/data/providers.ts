@@ -6,6 +6,43 @@ export type ProviderTier = 'basic' | 'preferred' | 'premier';
 export type ClinicianType = 'PT' | 'DC' | 'LMT' | 'OT' | 'MD' | 'DPT' | 'ATC' | 'Other';
 export type GrastonLevel = 'M1' | 'M2' | 'Basic' | 'Advanced' | 'Specialist' | 'Instructor';
 
+interface BusinessHours {
+  open: string;  // Format: "HH:mm"
+  close: string; // Format: "HH:mm"
+}
+
+interface Availability {
+  monday?: BusinessHours;
+  tuesday?: BusinessHours;
+  wednesday?: BusinessHours;
+  thursday?: BusinessHours;
+  friday?: BusinessHours;
+  saturday?: BusinessHours;
+  sunday?: BusinessHours;
+}
+
+interface Treatment {
+  title: string;
+  description: string;
+  price: number;
+  duration: number; // in minutes
+}
+
+interface Review {
+  id: number;
+  rating: number;
+  comment: string;
+  author: string;
+  date: string;
+  verified: boolean;
+}
+
+interface Gallery {
+  before: string;
+  after: string;
+  description: string;
+}
+
 export interface Provider {
   id: number;
   name: string;
@@ -17,6 +54,16 @@ export interface Provider {
   practice: string;
   tier: ProviderTier;
   searchPriority: number; // Higher = appears first in results
+  isVerified?: boolean;   // Verification badge
+  
+  // Enhanced Professional Details
+  treatments?: Treatment[];
+  availability?: Availability;
+  gallery?: Gallery[];
+  videoIntroUrl?: string;
+  reviews?: Review[];
+  rating?: number; // Average rating
+  totalReviews?: number;
   
   // Location & Contact
   address: string;

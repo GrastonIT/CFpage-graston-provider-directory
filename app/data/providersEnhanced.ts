@@ -6,6 +6,43 @@ export type ProviderTier = 'basic' | 'preferred' | 'premier';
 export type ClinicianType = 'PT' | 'DC' | 'LMT' | 'OT' | 'MD' | 'DPT' | 'ATC' | 'Other';
 export type GrastonLevel = 'M1' | 'M2' | 'Basic' | 'Advanced' | 'Specialist' | 'Instructor';
 
+interface BusinessHours {
+  open: string;  // Format: "HH:mm"
+  close: string; // Format: "HH:mm"
+}
+
+interface Availability {
+  monday?: BusinessHours;
+  tuesday?: BusinessHours;
+  wednesday?: BusinessHours;
+  thursday?: BusinessHours;
+  friday?: BusinessHours;
+  saturday?: BusinessHours;
+  sunday?: BusinessHours;
+}
+
+interface Treatment {
+  title: string;
+  description: string;
+  price: number;
+  duration: number; // in minutes
+}
+
+interface Review {
+  id: number;
+  rating: number;
+  comment: string;
+  author: string;
+  date: string;
+  verified: boolean;
+}
+
+interface Gallery {
+  before: string;
+  after: string;
+  description: string;
+}
+
 export interface Provider {
   id: number;
   name: string;
@@ -17,6 +54,17 @@ export interface Provider {
   practice: string;
   tier: ProviderTier;
   searchPriority: number; // Higher = appears first in results
+  isVerified?: boolean;
+  profileImage?: string;
+  rating?: number;
+  totalReviews?: number;
+  
+  // Enhanced Features
+  availability?: Availability;
+  treatments?: Treatment[];
+  gallery?: Gallery[];
+  videoIntroUrl?: string;
+  reviews?: Review[];
   
   // Location & Contact
   address: string;
@@ -78,7 +126,12 @@ export interface Provider {
   
   // Premier Features
   aboutClinic?: string; // WYSIWYG content (Premier only)
-  gallery?: string[]; // Image URLs (Premier only)
+  // Enhanced Features
+  availability?: Availability;
+  treatments?: Treatment[];
+  gallery?: Gallery[];
+  videoIntroUrl?: string;
+  reviews?: Review[];
   introVideo?: string; // Video embed URL (Premier only)
   
   // Analytics

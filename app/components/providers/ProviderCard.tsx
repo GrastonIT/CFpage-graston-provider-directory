@@ -15,12 +15,11 @@ export function ProviderCard({ provider }: { provider: Provider }) {
       <div className="flex justify-between items-start mb-3">
         <h3 className="font-bold text-xl text-gray-900">{provider.name || 'Unknown Provider'}</h3>
         {provider.grastonLevel && (
-          <span className={`px-2 py-1 text-xs rounded-full font-medium ${
-            provider.grastonLevel === 'Instructor' ? 'bg-purple-100 text-purple-800' :
-            provider.grastonLevel === 'Specialist' ? 'bg-blue-100 text-blue-800' :
-            provider.grastonLevel === 'Advanced' ? 'bg-green-100 text-green-800' :
-            'bg-gray-100 text-gray-800'
-          }`}>
+          <span className={`px-2 py-1 text-xs rounded-full font-medium ${provider.grastonLevel === 'Instructor' ? 'bg-purple-100 text-purple-800' :
+              provider.grastonLevel === 'Specialist' ? 'bg-blue-100 text-blue-800' :
+                provider.grastonLevel === 'Advanced' ? 'bg-green-100 text-green-800' :
+                  'bg-gray-100 text-gray-800'
+            }`}>
             {provider.grastonLevel}
           </span>
         )}

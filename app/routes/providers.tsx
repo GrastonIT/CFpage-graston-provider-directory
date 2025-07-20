@@ -5,7 +5,6 @@ import { SearchBar } from "../components/base/SearchBar";
 import { DirectoryMap } from "../components/providers/DirectoryMap";
 import { FilterGroup } from "../components/providers/FilterGroup";
 import { ProviderCardList } from "../components/providers/ProviderCardList";
-import { ProximityFilter } from "../components/providers/ProximityFilter";
 import { getProviders, getUniqueLanguages, getUniquePatientTypes, getUniqueSpecialties, searchProviders } from "../data/providers";
 import type { Route } from "./+types/providers";
 
@@ -40,21 +39,21 @@ export async function loader({ request }: Route.LoaderArgs) {
 
     // Filter out providers with invalid data
     providers = providers.filter(provider => {
-      return provider && 
-             provider.id &&
-             provider.name &&
-             (!provider.position || (
-               Array.isArray(provider.position) &&
-               provider.position.length === 2 &&
-               typeof provider.position[0] === 'number' &&
-               typeof provider.position[1] === 'number' &&
-               !isNaN(provider.position[0]) &&
-               !isNaN(provider.position[1]) &&
-               provider.position[0] >= -90 &&
-               provider.position[0] <= 90 &&
-               provider.position[1] >= -180 &&
-               provider.position[1] <= 180
-             ));
+      return provider &&
+        provider.id &&
+        provider.name &&
+        (!provider.position || (
+          Array.isArray(provider.position) &&
+          provider.position.length === 2 &&
+          typeof provider.position[0] === 'number' &&
+          typeof provider.position[1] === 'number' &&
+          !isNaN(provider.position[0]) &&
+          !isNaN(provider.position[1]) &&
+          provider.position[0] >= -90 &&
+          provider.position[0] <= 90 &&
+          provider.position[1] >= -180 &&
+          provider.position[1] <= 180
+        ));
     });
   } else {
     // No search query, use regular getProviders with filters
@@ -106,19 +105,19 @@ export default function ProvidersPage() {
             title="Specialties"
             options={facets.specialty}
             selected={[]}
-            onChange={() => {}}
+            onChange={() => { }}
           />
           <FilterGroup
             title="Languages"
             options={facets.languages}
             selected={[]}
-            onChange={() => {}}
+            onChange={() => { }}
           />
           <FilterGroup
             title="Patient Types"
             options={facets.patients}
             selected={[]}
-            onChange={() => {}}
+            onChange={() => { }}
           />
         </aside>
         <main className="lg:w-3/4">
