@@ -3,7 +3,6 @@ import { useLoaderData } from "react-router";
 import { LoadMoreButton } from "../components/base/LoadMoreButton";
 import { SearchBar } from "../components/base/SearchBar";
 import { DirectoryMap } from "../components/providers/DirectoryMap";
-import { FilterGroup } from "../components/providers/FilterGroup";
 import { ProviderCardList } from "../components/providers/ProviderCardList";
 import { getProviders, getUniqueLanguages, getUniquePatientTypes, getUniqueSpecialties, searchProviders } from "../data/providers";
 import type { Route } from "./+types/providers";
@@ -81,70 +80,56 @@ export async function loader({ request }: Route.LoaderArgs) {
   };
 }
 
+
 export default function ProvidersPage() {
-  const { providers, searchQuery, facets } = useLoaderData<typeof loader>();
+  const { providers, searchQuery } = useLoaderData<typeof loader>();
   const sortedProviders = providers;
 
   return (
-    <>
-      <SearchBar placeholder="Search by name, specialty, or location…" />
-
-      {/* Search Results Info */}
-      {searchQuery && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-blue-800">
-            Found <strong>{providers.length}</strong> provider{providers.length !== 1 ? 's' : ''}
-            for "<strong>{searchQuery}</strong>"
-          </p>
+    <div className="min-h-screen bg-[#f7f9fb] py-8 px-2 md:px-8">
+      {/* Map Card */}
+      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-4 md:p-8 mb-8">
+        <div className="h-[320px] w-full rounded-xl overflow-hidden shadow">
+          <DirectoryMap
+            id="map"
+            center={providers.length > 0 ? providers[0].position : [39.8283, -98.5795]}
+            markers={providers}
+          />
         </div>
-      )}
-
-      <div className="flex flex-col lg:flex-row gap-8 mt-4">
-        <aside className="lg:w-1/4 p-4 border rounded-lg shadow-sm h-fit">
-          <FilterGroup
-            title="Specialties"
-            options={facets.specialty}
-            selected={[]}
-            onChange={() => { }}
-          />
-          <FilterGroup
-            title="Languages"
-            options={facets.languages}
-            selected={[]}
-            onChange={() => { }}
-          />
-          <FilterGroup
-            title="Patient Types"
-            options={facets.patients}
-            selected={[]}
-            onChange={() => { }}
-          />
-        </aside>
-        <main className="lg:w-3/4">
-          <div className="h-[400px] w-full rounded-lg overflow-hidden shadow-md">
-            <DirectoryMap
-              id="map"
-              center={providers.length > 0 ? providers[0].position : [39.8283, -98.5795]}
-              markers={providers}
-            />
-          </div>
-
-          {/* Results count */}
-          <div className="flex justify-between items-center mt-4 mb-4">
-            <h2 className="text-lg font-semibold text-gray-800">
-              {providers.length} Provider{providers.length !== 1 ? 's' : ''} Found
-            </h2>
-            {providers.length === 0 && searchQuery && (
-              <p className="text-gray-600">
-                Try adjusting your search terms or filters
-              </p>
-            )}
-          </div>
-
-          <ProviderCardList providers={sortedProviders} />
-          {providers.length > 0 && <LoadMoreButton />}
-        </main>
       </div>
-    </>
+
+      {/* Search & Filters Bar */}
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-3 md:gap-4 mb-6">
+        <div className="flex-1 w-full">
+          <SearchBar placeholder="Enter a location or search by name…" />
+        </div>
+        <button className="mt-2 md:mt-0 px-5 py-2 bg-blue-600 text-white font-semibold rounded-full shadow hover:bg-blue-700 transition">Search</button>
+        <button className="ml-0 md:ml-2 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2">
+          <span className="material-icons text-base">tune</span>
+          More filters
+        </button>
+      </div>
+
+      {/* Grid/List Toggle & Member Count */}
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center mb-4">
+        <div className="flex items-center gap-2 mb-2 md:mb-0">
+          <button className="p-2 rounded-lg border border-gray-200 bg-white shadow-sm hover:bg-blue-50">
+            <span className="material-icons">grid_view</span>
+          </button>
+          <button className="p-2 rounded-lg border border-gray-200 bg-white shadow-sm hover:bg-blue-50">
+            <span className="material-icons">view_list</span>
+          </button>
+        </div>
+        <h2 className="text-2xl font-light text-gray-700 tracking-wide">
+          {providers.length} Member{providers.length !== 1 ? 's' : ''}
+        </h2>
+      </div>
+
+      {/* Provider Cards Grid */}
+      <div className="max-w-5xl mx-auto">
+        <ProviderCardList providers={sortedProviders} />
+        {providers.length > 0 && <div className="flex justify-center mt-8"><LoadMoreButton /></div>}
+      </div>
+    </div>
   );
 }

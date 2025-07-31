@@ -14,7 +14,6 @@
       "ES2022"
     ],
     "types": [
-      "vite/client",
       "@cloudflare/workers-types"
     ],
     "isolatedModules": true,
